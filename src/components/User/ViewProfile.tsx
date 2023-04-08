@@ -1,19 +1,6 @@
-import {
-  Avatar,
-  AvatarBadge,
-  Box,
-  Button,
-  Container,
-  Divider,
-  Flex,
-  HStack,
-  Heading,
-  Stat,
-  StatLabel,
-  StatNumber,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import React from "react";
+import { Flex, Text, Stack, Image, Button } from "@chakra-ui/react";
+
 import {
   collection,
   limit,
@@ -21,33 +8,23 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { currentUserState } from "../../atoms/currentUserState";
+import { imageViewModelState } from "../../atoms/imageViewModelState";
 import { myMessagesModelState } from "../../atoms/myMessagesModelState";
 import { sendMessageModelState } from "../../atoms/sendMessageModelState";
-import { Message } from "../../types/Message";
+import ImageViewModel from "../Model/Images/ImageViewModel";
 import SendMessageModel from "../Model/Message/SendMessageModel";
 import ViewMessages from "../Model/Message/ViewMessages";
 import { firestore } from "../firebase/clientApp";
+import { Message } from "../../types/Message";
 
-import { imageViewModelState } from "../../atoms/imageViewModelState";
-import ImageViewModel from "../Model/Images/ImageViewModel";
-import "../homepage.css";
 
-type Connection = {
-  id: number;
-  user1: string;
-  user2: string;
-  connected: boolean;
-  status: string;
-};
-
-const ViewProfile: React.FC = () => {
+const NewUserProfileView: React.FC = () => {
   const navigate = useNavigate();
 
-  const connectionCol = collection(firestore, "connections");
   const profileCol = collection(firestore, "userProfiles");
   const messageCol = collection(firestore, "messages");
   const [currentUser] = useRecoilState(currentUserState);
@@ -56,14 +33,6 @@ const ViewProfile: React.FC = () => {
   );
   const [myMessages, setMyMessagesModelState] =
     useRecoilState(myMessagesModelState);
-  const [sendRequest, setSendRequest] = useState(false);
-  const [connection, setConnection] = useState<Connection>({
-    id: 0,
-    user1: "",
-    user2: "",
-    connected: false,
-    status: "",
-  });
 
   const [userProfile, setUserProfile] = useState<{
     name: string;
@@ -87,53 +56,18 @@ const ViewProfile: React.FC = () => {
     pet: "",
   });
 
-  const [fetchingConnection, setFetchingConnection] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState(false);
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<{ status: string }>({ status: "" });
   const { id } = useParams();
   const [imageViewModel, setImageViewModelState] = useRecoilState(imageViewModelState)
 
-  //プロフィール写真をアップデートするために、これを実装してください。
-
-  // const handleSendRequest = async () => {
-  //   try {
-  //     setSendRequest(true);
-  //     await setDoc(
-  //       doc(firestore, `connections/connectionId-${currentUser.id}`),
-  //       {
-  //         connected: false,
-  //         status: "pending",
-  //         user1: currentUser.id,
-  //         user2: id,
-  //       }
-  //     );
-
-  //     // create a new notification for receiver of this connection request (user2 => sender)
-  //     try {
-  //       await setDoc(
-  //         doc(firestore, `notifications/notificationId-${currentUser.id}`),
-  //         {
-  //           message: `${currentUser.email} sent you a talk request.`,
-  //           receiver: id,
-  //           sender: currentUser.email,
-  //           type: "requestSent",
-  //           seen: false,
-  //         }
-  //       );
-  //     } catch (error) {
-  //       console.log("notification creation error ");
-  //     }
-  //     setSendRequest(false);
-  //   } catch (error) {
-  //     console.log("create connection request " + error);
-  //   }
-  // };
-
+  // method to send a message from current user
   const handleSendMessage = () => {
     setSendMessageModelState({ open: true });
   };
 
+  // method to see all the messages for current user
   const handleSeeMessage = () => {
     const mq = query(messageCol, where("to.id", "==", `${currentUser.id}`));
     try {
@@ -191,35 +125,6 @@ const ViewProfile: React.FC = () => {
       });
     });
 
-    // const q = query(
-    //   connectionCol,
-    //   where("user1", "==", `${currentUser.id}`),
-    //   where("user2", "==", `${id}`),
-    //   limit(1)
-    // );
-    // const q2 = query(
-    //   connectionCol,
-    //   where("user1", "==", `${id}`),
-    //   where("user2", "==", `${currentUser.id}`),
-    //   limit(1)
-    // );
-
-    // setFetchingConnection(true);
-    // const unsub2 = onSnapshot(q, (snapShot) => {
-    //   snapShot.forEach((doc) => {
-    //     setConnection(doc.data() as Connection);
-    //   });
-    //   setFetchingConnection(false);
-    // });
-
-    // setFetchingConnection(true);
-    // const unsub3 = onSnapshot(q2, (snapShot) => {
-    //   snapShot.forEach((doc) => {
-    //     setConnection(doc.data() as Connection);
-    //   });
-    //   setFetchingConnection(false);
-    // });
-
     const revokeEverything = () => {
       unsub();
       unsub2();
@@ -229,6 +134,7 @@ const ViewProfile: React.FC = () => {
     return () => revokeEverything();
   }, [firestore, id]);
 
+  // button to edit the current user profile
   function renderEditButton() {
     if (currentUser.id === id) {
       return (
@@ -240,6 +146,7 @@ const ViewProfile: React.FC = () => {
             bg="red.400"
             color="white"
             onClick={() => navigate(`/update-profile/${currentUser.id}`)}
+            _hover={{ bg: "white", color: "red.500", border: "1px solid", borderColor: "red.500" }}
           >
             プロフィール編集
           </Button>
@@ -248,163 +155,213 @@ const ViewProfile: React.FC = () => {
     }
   }
 
+
   return (
-    <VStack h="full" spacing={0}>
-      <Container maxW="2xl" bg="red.50" mt={6} mb={6} rounded="md" shadow="md">
-        <Flex
-          flexDirection="column"
-          alignItems="start"
-          py={6}
-          w="full"
-          maxW="2xl"
+    <>
+      <Flex
+        bg={"white"}
+        height={"100vh"}
+        width={"full"}
+        alignItems="center"
+        justifyContent="center"
+        margin={0}
+        padding={0}
+      >
+        <Stack
+          direction={{ base: "column", sm: "column", md: "row", lg: "row" }}
+          justifyContent={"space-between"}
+          alignItems={"center"}
+          width={{ base: "90%", md: "80%", lg: "80%" }}
+          height={{ base: "700px", sm: "700px", md: "700px", lg: "700px" }}
+          borderRadius="20px"
+          padding={"25px"}
+          border="1px solid"
+          borderColor={"gray.200"}
+          bg="red.50"
+          overflow={"scroll"}
         >
-          <Box p={6} w="full" h="full" overflow="auto">
-            <Stat mt={6}>
-              <StatLabel color="gray.500">Profile of</StatLabel>
-              <StatNumber>{userProfile.name}</StatNumber>
-            </Stat>
-            <Box w="full">
-              <Divider color="gray.100" />
-            </Box>
-            <Flex py={3} flexDirection="column" justifyContent="flex-start">
-              <Flex alignItems={"center"}>
-                <ImageViewModel imageUrl={userProfile.profileImage} />
-                <Avatar
-                  onClick={() => setImageViewModelState({ open: true })}
-                  name={userProfile.name}
-                  size="xl"
-                  src={userProfile.profileImage}
-                >
-                  <AvatarBadge
-                    bg={
-                      status.status === "want_to_talk"
-                        ? `green.500`
-                        : status.status === "do_not_want_to_talk"
-                        ? `red.500`
-                        : "blue.500"
-                    }
-                    boxSize={6}
-                    borderWidth={4}
-                  ></AvatarBadge>
-                </Avatar>
-               { renderEditButton() } 
-              </Flex>
-              <Box w="full" h="full" mt={1}>
-                <VStack w="full" h="full" spacing={4} overflowY="auto">
-                  <HStack w="full" mt={6} alignItems="center">
-                    <Heading size="xs" minW={48} w={48}>
-                      所属名
-                    </Heading>
-                    {loading ? (
-                      <Text color="gray.500" fontSize="sm">
-                        Loading company name
-                      </Text>
-                    ) : (
-                      <Text flex={1} color="gray.500" fontSize="sm">
-                        {userProfile.companyName}
-                      </Text>
-                    )}
-                  </HStack>
-                  <HStack w="full" mt={6} alignItems="center">
-                    <Heading size="xs" minW={48} w={48}>
-                      所属組織の紹介
-                    </Heading>
-                    <Text flex={1} color="gray.500" fontSize="sm">
-                      {userProfile.companyProfile}
-                    </Text>
-                  </HStack>
-                  <HStack w="full" mt={6} alignItems="center">
-                    <Heading size="xs" minW={48} w={48}>
-                     職業プロフィール 
-                    </Heading>
-                    <Text color="gray.500" flex={1} fontSize="sm">
-                      {userProfile.workProfile}
-                    </Text>
-                  </HStack>
-                  <HStack w="full" mt={6} alignItems="center">
-                    <Heading size="xs" minW={48} w={48}>
-                      趣味
-                    </Heading>
-                    <Text color="gray.500" flex={1} fontSize="sm">
-                      {" "}
-                      {userProfile.hobbies}
-                    </Text>
-                  </HStack>
-                  <HStack w="full" mt={6} alignItems="center">
-                    <Heading size="xs" minW={48} w={48}>
-                      飼っているペット
-                    </Heading>
-                    <Text color="gray.500" flex={1} fontSize="sm">
-                      {userProfile.pet}
-                    </Text>
-                  </HStack>
-                  <Flex flexDirection="column" w="full" maxHeight="150px" mt={6} overflowY="scroll">
-                    <Heading mb={2} size="xs">
-                      自己紹介文
-                    </Heading>
-                    <Text w="full" h="full" fontSize="xs" color="gray.500">
-                      {userProfile.pr}
-                    </Text>
-                  </Flex>
-                </VStack>
-                {currentUser.id === id ? (
-                  <Flex alignItems='center' justifyContent='center'>
-                    <ViewMessages />
-                    <Button
-                      _hover={{
-                        bg: "white",
-                        border: "1px solid",
-                        borderColor: "red.500",
-                        color: "red.500",
-                      }}
-                      fontSize={{ base: "8pt", sm: "9pt", md: "10pt"}}
-                      fontWeight={700}
-                      bg="red.500"
-                      color="white"
-                      variant="solid"
-                      height="36px"
-                      width="50%"
-                      mt={3}
-                      onClick={() => handleSeeMessage()}
-                      isLoading={loadingMessage}
-                      style={{ boxShadow: "5px 5px" }}
-                      className="my__button"
-                    >
-                      届いたメッセージを見る
-                    </Button>
-                  </Flex>
-                ) : (
-                    <Flex alignItems={'center'} justifyContent={'center'}>
-                      <SendMessageModel id={id as string} />
-                      <Button
-                        _hover={{
-                          bg: "white",
-                          border: "1px solid",
-                          borderColor: "red.500",
-                          color: "red.500",
-                        }}
-                        type="submit"
-                        fontSize="10pt"
-                        fontWeight={700}
-                        bg="red.500"
-                        color="white"
-                        variant="solid"
-                        height="36px"
-                        width="50%"
-                        onClick={() => handleSendMessage()}
-                        className="my__button"
-                      >
-                        メッセージを送信する
-                      </Button>
-                    </Flex>
-                )}
-              </Box>
+          <Flex
+            alignItems="center"
+            justifyContent="center"
+            padding={"20px"}
+            width={{ base: "full", sm: "full", md: "40%", lg: "40%" }}
+          >
+            <Flex
+              flexDirection={"column"}
+              gap={10}
+              alignItems={"center"}
+              justifyContent={"center"}
+              width="full"
+            >
+              <ImageViewModel imageUrl={userProfile.profileImage} />
+              <Image
+                onClick={() => setImageViewModelState({ open: true })}
+                rounded={"full"}
+                border="5px solid"
+                borderColor={status.status === "want_to_talk"
+                  ? `green.500`
+                  : status.status === "do_not_want_to_talk"
+                    ? `red.500`
+                    : "blue.500"}
+                h={{ base: "200px", sm: "250px", md: "250px", lg: "300px" }}
+                w={{ base: "200px", sm: "250px", md: "250px", lg: "300px" }}
+                src={userProfile.profileImage}
+                alt="User profile picutre"
+              />
+
+              {/* a button to edit the profile */}
+              {renderEditButton()}
+
+              {currentUser.id === id ? (
+                <Flex width={'full'} alignItems='center' justifyContent='center'>
+                  <ViewMessages />
+                  <Button
+                    _hover={{
+                      bg: "white",
+                      border: "1px solid",
+                      borderColor: "red.500",
+                      color: "red.500",
+                    }}
+                    fontSize={{ base: "8pt", sm: "9pt", md: "10pt" }}
+                    fontWeight={700}
+                    bg="red.500"
+                    color="white"
+                    variant="solid"
+                    height="36px"
+                    width="full"
+                    mt={3}
+                    onClick={() => handleSeeMessage()}
+                    isLoading={loadingMessage}
+                    style={{ boxShadow: "5px 5px" }}
+                  >
+                    届いたメッセージを見る
+                  </Button>
+                </Flex>
+              ) : (
+                <Flex alignItems={'center'} justifyContent={'center'}>
+                  <SendMessageModel id={id as string} />
+                  <Button
+                    _hover={{
+                      bg: "white",
+                      border: "1px solid",
+                      borderColor: "red.500",
+                      color: "red.500",
+                    }}
+                    type="submit"
+                    fontSize="10pt"
+                    fontWeight={700}
+                    bg="red.500"
+                    color="white"
+                    variant="solid"
+                    height="36px"
+                    width="full"
+                    onClick={() => handleSendMessage()}
+                  >
+                    メッセージを送信する
+                  </Button>
+                </Flex>
+              )}
             </Flex>
-          </Box>
-        </Flex>
-      </Container>
-    </VStack>
+          </Flex>
+          <Flex
+            padding={"20px"}
+            alignItems="start"
+            justifyContent="start"
+            width={{ base: "full", sm: "full", md: "60%", lg: "60%" }}
+            border="1px solid"
+            borderColor="gray.200"
+            borderRadius="20px"
+          >
+            <Flex
+              gap={"20px"}
+              direction={"column"}
+              width={"full"}
+              height={"full"}
+            >
+              <Stack spacing={0} alignItems={"start"}>
+                <Text fontSize={{ base: "2xl", md: "3xl" }} fontWeight="bold" color="gray.800">
+                  {userProfile.name}
+                </Text>
+              </Stack>
+              <Stack spacing={0} alignItems={"start"}>
+                <Text fontSize={{ base: "md", md: "xl", lg: "xl" }} fontWeight="bold">
+                  所属名:
+                </Text>
+                <Text fontSize={{ base: "sm", md: "md", lg: "md" }} fontWeight="light" color="gray.600">
+                  {userProfile.companyName}
+                </Text>
+              </Stack>
+              <Stack spacing={0} alignItems={"start"}>
+                <Text fontSize={{ base: "md", md: "xl", lg: "xl" }} fontWeight="bold">
+                  所属組織の紹介:
+                </Text>
+                <Text fontSize={{ base: "sm", md: "md", lg: "md" }} fontWeight="light" color="gray.600">
+                  {userProfile.companyProfile}
+                </Text>
+              </Stack>
+              <Stack spacing={0} alignItems={"start"}>
+                <Text fontSize={{ base: "md", md: "xl", lg: "xl" }} fontWeight="bold">
+                  職業プロフィール:
+                </Text>
+                <Text
+                  width={"full"}
+                  fontSize={{ base: "sm", md: "md", lg: "md" }}
+                  fontWeight="light"
+                  color="gray.600"
+                >
+                  {userProfile.workProfile}
+                </Text>
+              </Stack>
+              <Stack spacing={0} alignItems={"start"}>
+                <Text fontSize={{ base: "md", md: "xl", lg: "xl" }} fontWeight="bold">
+                  趣味:
+                </Text>
+                <Text
+                  width={"full"}
+                  fontSize={{ base: "sm", md: "md", lg: "md" }}
+                  fontWeight="light"
+                  color="gray.600"
+                >
+                  {userProfile.hobbies}
+                </Text>
+              </Stack>
+              <Stack spacing={0} alignItems={"start"}>
+                <Text fontSize={{ base: "md", md: "xl", lg: "xl" }} fontWeight="bold">
+                  飼っているペット:
+                </Text>
+                <Text
+                  width={"full"}
+                  fontSize={{ base: "sm", md: "md", lg: "md" }}
+                  fontWeight="light"
+                  color="gray.600"
+                >
+                  {userProfile.pet}
+                </Text>
+              </Stack>
+              <Stack
+                spacing={0}
+                alignItems={"start"}
+                maxHeight={"150px"}
+                overflowY="scroll"
+              >
+                <Text fontSize={{ base: "md", md: "xl", lg: "xl" }} fontWeight="bold">
+                  自己紹介文:
+                </Text>
+                <Text
+                  width={"full"}
+                  fontSize={{ base: "sm", md: "md", lg: "md" }}
+                  fontWeight="light"
+                  color="gray.600"
+                >
+                  {userProfile.pr}
+                </Text>
+              </Stack>
+            </Flex>
+          </Flex>
+        </Stack>
+      </Flex>
+    </>
   );
 };
 
-export default ViewProfile;
+export default NewUserProfileView;

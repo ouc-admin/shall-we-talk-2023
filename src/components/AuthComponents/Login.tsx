@@ -144,10 +144,10 @@ const Login: React.FC<LoginProps> = () => {
         // toast to show that a user logged-in using mobile device
         if (mobile) {
           toast({
-            title: "Mobile device login",
-            description: "You are using a mobile so you won't be able to use virtual space",
-            status: "success",
-            duration: 4000,
+            title: "モバイルユーザーがログイン",
+            description: "モバイルからSWTにアクセスしているユーザー様はバーチャルスペースの機能が制限されています",
+            status: "error",
+            duration: 10000,
             isClosable: true,
           });
         }
