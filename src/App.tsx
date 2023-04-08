@@ -20,6 +20,7 @@ import RegisterSpace from "./components/CoWorkingSpaceRegistration/Register";
 import GenerateAccessKey from "./components/GenerateAccessKeyForVS/GenerateAccessKey";
 import ResetPassword from "./components/Model/Auth/ResetPassword";
 import LandingPage from "./components/LandingPage";
+import NewUserProfile from "./NewUserProfile";
 
 const App: React.FC = () => {
   return (
@@ -44,6 +45,7 @@ const App: React.FC = () => {
           <Route path="/landing-page" element={<LandingPage />} />
           <Route path="/*" element={<PageNotFound />} />
           <Route path="/testing" element={<Testing />} />
+          <Route path="/new-user-profile" element={<NewUserProfile />} />
         </Routes>
       </Layout>
     </ChakraProvider>
