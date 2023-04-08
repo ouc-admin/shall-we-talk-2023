@@ -18,6 +18,8 @@ import { sendMessageModelState } from "./atoms/sendMessageModelState";
 import { firestore } from "./components/firebase/clientApp";
 import { Message } from "./types/Message";
 import SendMessageModel from "./components/Model/Message/SendMessageModel";
+import ViewMessages from "./components/Model/Message/ViewMessages";
+import ImageViewModel from "./components/Model/Images/ImageViewModel";
 
 const NewUserProfileView: React.FC = () => {
   const navigate = useNavigate();
@@ -59,10 +61,12 @@ const NewUserProfileView: React.FC = () => {
   const { id } = useParams();
   const [imageViewModel, setImageViewModelState] = useRecoilState(imageViewModelState)
 
+  // method to send a message from current user
   const handleSendMessage = () => {
     setSendMessageModelState({ open: true });
   };
 
+  // method to see all the messages for current user
   const handleSeeMessage = () => {
     const mq = query(messageCol, where("to.id", "==", `${currentUser.id}`));
     try {
@@ -129,6 +133,7 @@ const NewUserProfileView: React.FC = () => {
     return () => revokeEverything();
   }, [firestore, id]);
 
+  // button to edit the current user profile
   function renderEditButton() {
     if (currentUser.id === id) {
       return (
@@ -140,6 +145,7 @@ const NewUserProfileView: React.FC = () => {
             bg="red.400"
             color="white"
             onClick={() => navigate(`/update-profile/${currentUser.id}`)}
+            _hover={{ bg: "white", color: "red.500", border: "1px solid", borderColor: "red.500" }}
           >
             プロフィール編集
           </Button>
@@ -186,45 +192,74 @@ const NewUserProfileView: React.FC = () => {
               justifyContent={"center"}
               width="full"
             >
+              <ImageViewModel imageUrl={userProfile.profileImage} />
               <Image
+                onClick={() => setImageViewModelState({ open: true })}
                 rounded={"full"}
                 border="5px solid"
-                borderColor={'blue.500'}
-                h={{ base: "200px", sm: "250px", md: "full", lg: "300px" }}
-                w={{ base: "200px", sm: "250px", md: "full", lg: "300px" }}
+                borderColor={status.status === "want_to_talk"
+                  ? `green.500`
+                  : status.status === "do_not_want_to_talk"
+                    ? `red.500`
+                    : "blue.500"}
+                h={{ base: "200px", sm: "250px", md: "250px", lg: "300px" }}
+                w={{ base: "200px", sm: "250px", md: "250px", lg: "300px" }}
                 src={userProfile.profileImage}
                 alt="User profile picutre"
               />
-              <Button
-                size={"sm"}
-                rounded="full"
-                variant={"outline"}
-                bg="red.500"
-                color="white"
-                _hover={{
-                  bg: "white",
-                  color: "red.500",
-                  borderColor: "red.500",
-                }}
-                fontSize="xs"
-              >
-               Update Profile 
-              </Button>
-              <SendMessageModel id={id as string} />
-              <Button
-                width={"full"}
-                bg="red.500"
-                color="white"
-                _hover={{
-                  bg: "white",
-                  color: "red.500",
-                  borderColor: "red.500",
-                }}
-                size={"sm"}
-                variant="outline"
-              >
-                Send message
-              </Button>
+
+              {/* a button to edit the profile */}
+              {renderEditButton()}
+
+              {currentUser.id === id ? (
+                <Flex width={'full'} alignItems='center' justifyContent='center'>
+                  <ViewMessages />
+                  <Button
+                    _hover={{
+                      bg: "white",
+                      border: "1px solid",
+                      borderColor: "red.500",
+                      color: "red.500",
+                    }}
+                    fontSize={{ base: "8pt", sm: "9pt", md: "10pt" }}
+                    fontWeight={700}
+                    bg="red.500"
+                    color="white"
+                    variant="solid"
+                    height="36px"
+                    width="full"
+                    mt={3}
+                    onClick={() => handleSeeMessage()}
+                    isLoading={loadingMessage}
+                    style={{ boxShadow: "5px 5px" }}
+                  >
+                    届いたメッセージを見る
+                  </Button>
+                </Flex>
+              ) : (
+                <Flex alignItems={'center'} justifyContent={'center'}>
+                  <SendMessageModel id={id as string} />
+                  <Button
+                    _hover={{
+                      bg: "white",
+                      border: "1px solid",
+                      borderColor: "red.500",
+                      color: "red.500",
+                    }}
+                    type="submit"
+                    fontSize="10pt"
+                    fontWeight={700}
+                    bg="red.500"
+                    color="white"
+                    variant="solid"
+                    height="36px"
+                    width="full"
+                    onClick={() => handleSendMessage()}
+                  >
+                    メッセージを送信する
+                  </Button>
+                </Flex>
+              )}
             </Flex>
           </Flex>
           <Flex
@@ -317,7 +352,7 @@ const NewUserProfileView: React.FC = () => {
                   fontWeight="light"
                   color="gray.600"
                 >
-                 {userProfile.pr} 
+                  {userProfile.pr}
                 </Text>
               </Stack>
             </Flex>
