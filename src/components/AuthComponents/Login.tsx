@@ -216,7 +216,7 @@ const Login: React.FC<LoginProps> = () => {
             onChange={(e) => setUserEmail(e.target.value)}
             type="email"
             placeholder="Eメール"
-            bg={"white"}
+            bg={"gray.50"}
             fontSize="10pt"
           />
           <Input
@@ -227,7 +227,7 @@ const Login: React.FC<LoginProps> = () => {
             type="password"
             mb={5}
             placeholder="パスワード"
-            bg={"white"}
+            bg={"gray.50"}
             fontSize="10pt"
           />
           <Input
@@ -237,7 +237,7 @@ const Login: React.FC<LoginProps> = () => {
             onChange={(e) => setAccessKey(e.target.value)}
             mb={3}
             placeholder="バーチャルスペースのアクセスキーを入力してください"
-            bg={"white"}
+            bg={"gray.50"}
             fontSize="10pt"
           />
           <Text color={"red.500"} fontSize={"8px"}>
