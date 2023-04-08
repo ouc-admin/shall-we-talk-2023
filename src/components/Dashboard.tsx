@@ -1,3 +1,4 @@
+import { SearchIcon } from "@chakra-ui/icons";
 import {
   Button,
   Flex,
@@ -26,14 +27,13 @@ import { showUserInMapState } from "../atoms/showUserInMapState";
 import { profileModelState } from "../atoms/userProfileModelState";
 import { userProfileState } from "../atoms/userProfileState";
 import { userStatusModelState } from "../atoms/userStatusModelState";
-import { firestore } from "./firebase/clientApp";
+import "../components/homepage.css";
 import { UserData } from "../types/UserData";
-import LoadingSpinner from "./customUIComponents/LoadingSpinner";
 import ProfileModel from "./Model/Profile/ProfileModel";
 import StatusModel from "./Model/Status/StatusModel";
 import User from "./User";
-import "../components/homepage.css";
-import { SearchIcon } from "@chakra-ui/icons";
+import LoadingSpinner from "./customUIComponents/LoadingSpinner";
+import { firestore } from "./firebase/clientApp";
 
 import { useNavigate, useParams } from "react-router-dom";
 import { myMessagesModelState } from "../atoms/myMessagesModelState";
