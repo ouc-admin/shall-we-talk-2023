@@ -1,41 +1,40 @@
 import {
-  Flex,
-  Text,
-  HStack,
-  VStack,
+  Avatar,
+  AvatarBadge,
   Box,
+  Button,
+  Container,
+  Divider,
+  Flex,
+  HStack,
+  Heading,
   Stat,
   StatLabel,
   StatNumber,
-  Container,
-  Divider,
-  Avatar,
-  AvatarBadge,
-  Heading,
-  Button,
+  Text,
+  VStack,
 } from "@chakra-ui/react";
 import {
-  onSnapshot,
   collection,
   limit,
+  onSnapshot,
   query,
   where,
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { currentUserState } from "../../atoms/currentUserState";
-import { firestore } from "../firebase/clientApp";
-import { useParams } from "react-router-dom";
-import SendMessageModel from "../Model/Message/SendMessageModel";
+import { myMessagesModelState } from "../../atoms/myMessagesModelState";
 import { sendMessageModelState } from "../../atoms/sendMessageModelState";
 import { Message } from "../../types/Message";
-import { myMessagesModelState } from "../../atoms/myMessagesModelState";
+import SendMessageModel from "../Model/Message/SendMessageModel";
 import ViewMessages from "../Model/Message/ViewMessages";
-import { useNavigate } from "react-router-dom";
+import { firestore } from "../firebase/clientApp";
 
-import "../homepage.css";
 import { imageViewModelState } from "../../atoms/imageViewModelState";
 import ImageViewModel from "../Model/Images/ImageViewModel";
+import "../homepage.css";
 
 type Connection = {
   id: number;
@@ -65,6 +64,7 @@ const ViewProfile: React.FC = () => {
     connected: false,
     status: "",
   });
+
   const [userProfile, setUserProfile] = useState<{
     name: string;
     email: string;
@@ -135,9 +135,7 @@ const ViewProfile: React.FC = () => {
   };
 
   const handleSeeMessage = () => {
-
     const mq = query(messageCol, where("to.id", "==", `${currentUser.id}`));
-
     try {
       setLoadingMessage(true);
       onSnapshot(mq, (snapShot) => {

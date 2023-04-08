@@ -48,7 +48,7 @@ const Login: React.FC<LoginProps> = () => {
 
   // this method handle login logic
   async function handleLogin() {
-   
+
     if (!userEmail || !userPassword || !accessKey) {
       alert('please fill all the fields to login')
       return
@@ -140,6 +140,18 @@ const Login: React.FC<LoginProps> = () => {
           duration: 4000,
           isClosable: true,
         });
+
+        // toast to show that a user logged-in using mobile device
+        if (mobile) {
+          toast({
+            title: "Mobile device login",
+            description: "You are using a mobile so you won't be able to use virtual space",
+            status: "success",
+            duration: 4000,
+            isClosable: true,
+          });
+        }
+
       })
       .catch((error) => {
         setLoading(false);
@@ -193,7 +205,7 @@ const Login: React.FC<LoginProps> = () => {
     setFetchingSpace(false);
     setTest(false);
 
-    return () => {};
+    return () => { };
   }, [accessKey]);
 
   return (
@@ -254,8 +266,8 @@ const Login: React.FC<LoginProps> = () => {
               loading
                 ? "サインイン中"
                 : fetchingSpace
-                ? "スペース詳細を取り込み中"
-                : ""
+                  ? "スペース詳細を取り込み中"
+                  : ""
             }
             isLoading={loading || fetchingSpace}
             size={"sm"}

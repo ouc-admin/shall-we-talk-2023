@@ -35,6 +35,7 @@ const App: React.FC = () => {
             <Route path="/create-profile/:email/:accessKey" element={<CreateProfile />} />
             <Route path="/profile/:id" element={<ViewProfile />} />
             <Route path="/update-profile/:id" element={<UpdateProfile />} />
+            <Route path="/new-user-profile" element={<NewUserProfile />} />
           </Route>
           <Route path="/generate-access-key" element={<GenerateAccessKey />} />
           <Route path="/register-a-new-space" element={<RegisterSpace />} />
@@ -45,7 +46,6 @@ const App: React.FC = () => {
           <Route path="/landing-page" element={<LandingPage />} />
           <Route path="/*" element={<PageNotFound />} />
           <Route path="/testing" element={<Testing />} />
-          <Route path="/new-user-profile" element={<NewUserProfile />} />
         </Routes>
       </Layout>
     </ChakraProvider>

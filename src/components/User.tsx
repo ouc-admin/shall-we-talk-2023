@@ -1,12 +1,12 @@
+import { Flex } from "@chakra-ui/react";
+import { KonvaEventObject } from "konva/lib/Node";
 import React, { useState } from "react";
 import { Image } from "react-konva";
-import { KonvaEventObject } from "konva/lib/Node";
-import useImage from "use-image";
 import { Html } from "react-konva-utils";
-import { Flex } from "@chakra-ui/react";
+import useImage from "use-image";
 
-import "../components/messagePopUp.css";
 import { doc, updateDoc } from "firebase/firestore";
+import "../components/messagePopUp.css";
 import { firestore } from "./firebase/clientApp";
 
 type UserProps = {
