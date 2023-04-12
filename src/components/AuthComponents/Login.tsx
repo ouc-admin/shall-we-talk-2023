@@ -45,6 +45,7 @@ const Login: React.FC<LoginProps> = () => {
   const [fetchingSpace, setFetchingSpace] = useState<boolean>(false);
   const [test, setTest] = useState<boolean>(false);
   const [mobile, setMobile] = useState<boolean>(false);
+  const [hideKey, setHideKey] = useState<boolean>(false)
 
   // this method handle login logic
   async function handleLogin() {
@@ -240,9 +241,10 @@ const Login: React.FC<LoginProps> = () => {
             bg={"gray.50"}
             fontSize="10pt"
           />
+          <Text fontSize={'xs'} color="red.400" cursor={'pointer'} onClick={() => setHideKey(!hideKey)}>Hide access Key</Text>
           <Input
             required
-            type="text"
+            type={hideKey ? 'password' : 'text'}
             autoComplete="off"
             onChange={(e) => setAccessKey(e.target.value)}
             mb={3}
