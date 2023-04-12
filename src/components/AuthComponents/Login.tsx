@@ -223,7 +223,6 @@ const Login: React.FC<LoginProps> = () => {
         <VStack width={"full"}>
           <Input
             required
-            autoComplete="none"
             width={"full"}
             onChange={(e) => setUserEmail(e.target.value)}
             type="email"
@@ -233,7 +232,6 @@ const Login: React.FC<LoginProps> = () => {
           />
           <Input
             required
-            autoComplete="none"
             width={"full"}
             onChange={(e) => setUserPassword(e.target.value)}
             type="password"
@@ -244,8 +242,8 @@ const Login: React.FC<LoginProps> = () => {
           />
           <Input
             required
-            type="password"
-            autoComplete="none"
+            type="text"
+            autoComplete="off"
             onChange={(e) => setAccessKey(e.target.value)}
             mb={3}
             placeholder="バーチャルスペースのアクセスキーを入力してください"

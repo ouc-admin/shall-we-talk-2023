@@ -232,7 +232,7 @@ const Register: React.FC<RegisterProps> = () => {
           name="access key"
           placeholder="バーチャルスペースのアクセスキーを入力してください"
           mb={2}
-          type="password"
+          type="text"
           onChange={(e) => setAccesskey(e.target.value)}
           fontSize="10pt"
           _placeholder={{ color: "gray.500" }}
@@ -248,6 +248,7 @@ const Register: React.FC<RegisterProps> = () => {
             borderColor: "blue.500",
           }}
           bg="gray.50"
+          autoComplete="off"
         />
         <Text color={"red.500"} fontSize={"8px"}>
           正しいアクセスキーを入力するとボタンがアクティブになります
