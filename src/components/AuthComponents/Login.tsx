@@ -51,8 +51,14 @@ const Login: React.FC<LoginProps> = () => {
   async function handleLogin() {
 
     if (!userEmail || !userPassword || !accessKey) {
-      alert('please fill all the fields to login')
-      return
+      toast({
+        title: "フォウムエラー",
+        description: "すべての入力欄に入力してください。",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
     }
 
     // set login logic here. if login success then

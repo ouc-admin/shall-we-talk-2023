@@ -1,5 +1,11 @@
 import {
-  Button, Center, Flex, Input, Text, useMediaQuery, useToast
+  Button,
+  Center,
+  Flex,
+  Input,
+  Text,
+  useMediaQuery,
+  useToast,
 } from "@chakra-ui/react";
 import { createUserWithEmailAndPassword, UserCredential } from "firebase/auth";
 import {
@@ -9,7 +15,7 @@ import {
   limit,
   query,
   setDoc,
-  where
+  where,
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -42,9 +48,22 @@ const Register: React.FC<RegisterProps> = () => {
   const [isLessThan393] = useMediaQuery("(max-width: 393px)");
 
   const onSubmit = () => {
-    if (error) {
-      setError(null);
+    // if (error) {
+    //   setError(null);
+    // }
+
+    // check if any of the field is not filled
+    if (!userEmail || !userPassword || !confirmPassword || !accessKey) {
+      toast({
+        title: "フォウムエラー",
+        description: "すべての入力欄に入力してください。",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
     }
+
     if (userPassword !== confirmPassword) {
       toast({
         title: "フォウムエラー",
