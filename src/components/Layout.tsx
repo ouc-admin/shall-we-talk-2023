@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { signOut } from "@firebase/auth";
+import { deleteDoc, doc } from "firebase/firestore";
+import React, { useEffect } from "react";
+import { useRecoilState } from "recoil";
+import { currentUserLogoutState } from "../atoms/currentUserLogoutState";
+import { currentUserProfileState } from "../atoms/currentUserProfileState";
+import { currentUserState } from "../atoms/currentUserState";
+import { auth, firestore } from "./firebase/clientApp";
 import Footer from "./Footer/Footer";
 import Navbar from "./Navbar";
-import { useRecoilState } from "recoil";
-import { currentUserState } from "../atoms/currentUserState";
-import { currentUserProfileState } from "../atoms/currentUserProfileState";
-import { currentUserLogoutState } from "../atoms/currentUserLogoutState";
-import { auth, firestore } from "./firebase/clientApp";
-import { deleteDoc, doc } from "firebase/firestore";
-import { signOut } from "@firebase/auth";
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -54,13 +54,14 @@ const handleLogout = async () => {
   // useEffect to perform unload events in layout
   useEffect(() => {
     
-    // window.addEventListener('beforeunload', alertUser)
-    // window.addEventListener('unload', handleEndConcert)
-    // return () => {
-    //   window.removeEventListener('beforeunload', alertUser)
-    //   window.removeEventListener('unload', handleEndConcert)
-    //   handleEndConcert()
-    // }
+    window.addEventListener('beforeunload', alertUser)
+    window.addEventListener('unload', handleEndConcert)
+
+    return () => {
+      window.removeEventListener('beforeunload', alertUser)
+      window.removeEventListener('unload', handleEndConcert)
+      handleEndConcert()
+    }
     
   }, [])
 
