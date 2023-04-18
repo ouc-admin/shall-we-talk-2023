@@ -2,10 +2,13 @@
 
 # dependencies
 /node_modules
+/src/components/TestingComponents
 /.pnp
 .pnp.js
 
 /src/firebase
+#/src/components/Layout.tsx
+
 # testing
 /coverage
 
@@ -18,6 +21,8 @@
 .env.development.local
 .env.test.local
 .env.production.local
+
+.env
 
 npm-debug.log*
 yarn-debug.log*

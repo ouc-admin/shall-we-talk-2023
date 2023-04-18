@@ -5,9 +5,11 @@ import {
   Input,
   Text,
   useMediaQuery,
-  useToast,
+  useToast
 } from "@chakra-ui/react";
-import { createUserWithEmailAndPassword, UserCredential } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword, UserCredential
+} from "firebase/auth";
 import {
   collection,
   doc,
@@ -15,7 +17,7 @@ import {
   limit,
   query,
   setDoc,
-  where,
+  where
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -90,6 +92,7 @@ const Register: React.FC<RegisterProps> = () => {
           email: userC.user.email!,
         }));
 
+
         // add this user to users colection in firebase
         addUserToUsers(userC);
         setLoading(false);
@@ -100,7 +103,7 @@ const Register: React.FC<RegisterProps> = () => {
           title: "新規登録終わり",
           description: "ご利用のメールアドレスはデータベースに保存されました。",
           status: "success",
-          duration: 2000,
+          duration: 3000,
           isClosable: true,
         });
         // here you can redirect user to login page so they can login now with new address
