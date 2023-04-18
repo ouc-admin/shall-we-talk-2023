@@ -63,7 +63,7 @@ const handleLogout = async () => {
       handleLogout()
     }
     
-  }, [userLogout.currentUserLoggedOut])
+  }, [])
 
   //
   const alertUser = (event: BeforeUnloadEvent) => {
