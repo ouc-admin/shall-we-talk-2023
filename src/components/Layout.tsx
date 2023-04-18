@@ -60,7 +60,7 @@ const handleLogout = async () => {
     return () => {
       window.removeEventListener('beforeunload', alertUser)
       window.removeEventListener('unload', handleEndConcert)
-      handleEndConcert()
+      handleLogout()
     }
     
   }, [])
