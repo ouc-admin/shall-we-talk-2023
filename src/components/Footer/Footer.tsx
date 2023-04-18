@@ -1,13 +1,13 @@
-import * as React from "react";
-import "../footer.css";
-import { FaLinkedin } from "react-icons/fa";
 import { Icon, Text } from "@chakra-ui/react";
+import * as React from "react";
+import { FaLinkedin } from "react-icons/fa";
 import { useRecoilState } from "recoil";
-import { privacyPolicyModelState } from "../../atoms/privacyPolicyModelState";
-import PrivacyPolicyModel from "../Model/Privacy Policy/PrivacyPolicyModel";
-import BugFeatureModel from "../Model/BugFeature/BugFeature";
 import { bugFeatureModelState } from "../../atoms/bugFeatureModelState";
 import { currentUserState } from "../../atoms/currentUserState";
+import { privacyPolicyModelState } from "../../atoms/privacyPolicyModelState";
+import "../footer.css";
+import BugFeatureModel from "../Model/BugFeature/BugFeature";
+import PrivacyPolicyModel from "../Model/Privacy Policy/PrivacyPolicyModel";
 
 const Footer: React.FC = () => {
   const [privacyModel, setPrivacyPolicyModelState] = useRecoilState(
@@ -72,7 +72,7 @@ const Footer: React.FC = () => {
               onClick={() => handleBugFeatureModelOpen()}
               textDecorationLine={"underline"}
             >
-              Report a Bug
+              SWTバグ報告
             </Text>
           </>
         ) : null}
