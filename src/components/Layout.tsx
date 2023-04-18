@@ -19,7 +19,7 @@ const [currentUser, setCurrentUserState] = useRecoilState(currentUserState);
 const [currentUserProfile, setCurrentUserProfileState] = useRecoilState(
   currentUserProfileState
 );
-const [userLogout, setCurrentUserLogoutState] = useRecoilState(currentUserLogoutState)
+  const [userLogout, setCurrentUserLogoutState] = useRecoilState(currentUserLogoutState)
 
 const handleLogout = async () => {
     await deleteDoc(doc(firestore, "vs-users", `userId-${currentUser.id}`));
@@ -68,7 +68,7 @@ const handleLogout = async () => {
   //
   const alertUser = (event: BeforeUnloadEvent) => {
     event.preventDefault()
-    event.returnValue = ''
+    event.returnValue = 'You will get logged out.'
   }
 
   // message to logout the user if a user close the window

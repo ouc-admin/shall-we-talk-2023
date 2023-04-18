@@ -165,7 +165,7 @@ const Login: React.FC<LoginProps> = () => {
         if (error.message === "Firebase: Error (auth/wrong-password).") {
           toast({
             title: "サーバーエラー",
-            description: "wrong password.",
+            description: "正しいパスワードを入力してください",
             status: "error",
             duration: 3000,
             isClosable: true,
@@ -247,10 +247,17 @@ const Login: React.FC<LoginProps> = () => {
             bg={"gray.50"}
             fontSize="10pt"
           />
-          <Text fontSize={'xs'} color="red.400" cursor={'pointer'} onClick={() => setHideKey(!hideKey)}>Hide access Key</Text>
+          <Text
+            fontSize={"xs"}
+            color="red.400"
+            cursor={"pointer"}
+            onClick={() => setHideKey(!hideKey)}
+          >
+            アクセスキーを表示/非表示
+          </Text>
           <Input
             required
-            type={hideKey ? 'password' : 'text'}
+            type={hideKey ? "password" : "text"}
             autoComplete="off"
             onChange={(e) => setAccessKey(e.target.value)}
             mb={3}
@@ -272,8 +279,8 @@ const Login: React.FC<LoginProps> = () => {
               loading
                 ? "サインイン中"
                 : fetchingSpace
-                  ? "スペース詳細を取り込み中"
-                  : ""
+                ? "スペース詳細を取り込み中"
+                : ""
             }
             isLoading={loading || fetchingSpace}
             size={"sm"}

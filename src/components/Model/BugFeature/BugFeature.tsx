@@ -1,18 +1,10 @@
 import {
-  Text,
-  Modal,
+  Box, Button, Flex, Image, Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
   ModalHeader,
-  ModalOverlay,
-  VStack,
-  Progress,
-  Flex,
-  Box,
-  Image,
-  Textarea,
-  Button,
+  ModalOverlay, Progress, Text, Textarea, VStack
 } from "@chakra-ui/react";
 import { doc, setDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
@@ -113,18 +105,22 @@ const BugFeatureModel: React.FC = () => {
 
   return (
     <>
-      <Modal size={{ base: "xs", sm: "sm", md: "lg" }} isOpen={bugFeatureModel.open} onClose={handleClose}>
+      <Modal
+        size={{ base: "xs", sm: "sm", md: "lg" }}
+        isOpen={bugFeatureModel.open}
+        onClose={handleClose}
+      >
         <ModalOverlay />
-        <ModalContent bg={"red.50"} height={'lg'}>
+        <ModalContent bg={"red.50"} height={"lg"}>
           <ModalHeader textAlign="center">
             <VStack>
-              <Text>Report a Bug here!</Text>
+              <Text>バグ報告 & ご要望の機能</Text>
             </VStack>
           </ModalHeader>
           <ModalCloseButton />
-          <ModalBody 
-            width={'100%'}
-            height={'100%'}
+          <ModalBody
+            width={"100%"}
+            height={"100%"}
             display="flex"
             flexDirection="column"
             overflowY={"scroll"}
@@ -143,7 +139,7 @@ const BugFeatureModel: React.FC = () => {
                 <Textarea
                   resize={"vertical"}
                   maxLength={500}
-                  placeholder="Please explain your bug here."
+                  placeholder="こちらに発見したバグの詳細を記述してください。"
                   fontSize={"10pt"}
                   bg="white"
                   mb={3}
@@ -170,7 +166,7 @@ const BugFeatureModel: React.FC = () => {
                       border: "1px solid",
                       borderColor: "red.500",
                       color: "red.500",
-                      transition: "0.5s"
+                      transition: "0.5s",
                     }}
                     bg="red.500"
                     color="white"
@@ -179,19 +175,17 @@ const BugFeatureModel: React.FC = () => {
                     isLoading={loading}
                     loadingText={"Submitting..."}
                   >
-                    Submit
+                    提出
                   </Button>
                 </Flex>
                 <Box
                   mt={2}
                   width="100%"
                   height="100%"
-                  boxSize={{ base: "xs", sm: "sm", md: "lg"}}
+                  boxSize={{ base: "xs", sm: "sm", md: "lg" }}
                   overflow="scroll"
                 >
-                  <Image
-                    src={downloadURL}
-                  />
+                  <Image src={downloadURL} />
                 </Box>
               </Flex>
             </Flex>
