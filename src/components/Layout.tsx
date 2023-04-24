@@ -52,18 +52,18 @@ const handleLogout = async () => {
   };
 
   // useEffect to perform unload events in layout
-  useEffect(() => {
+  // useEffect(() => {
     
-    window.addEventListener('beforeunload', alertUser)
-    window.addEventListener('unload', handleEndConcert)
+  //   window.addEventListener('beforeunload', alertUser)
+  //   window.addEventListener('unload', handleEndConcert)
 
-    return () => {
-      window.removeEventListener('beforeunload', alertUser)
-      window.removeEventListener('unload', handleEndConcert)
-      handleLogout()
-    }
+  //   return () => {
+  //     window.removeEventListener('beforeunload', alertUser)
+  //     window.removeEventListener('unload', handleEndConcert)
+  //     handleLogout()
+  //   }
     
-  }, [])
+  // }, [])
 
   //
   const alertUser = (event: BeforeUnloadEvent) => {

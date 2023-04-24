@@ -4,12 +4,17 @@ import {
   Button,
   Container,
   Divider,
-  Flex, Input,
-  Progress, Stack, Stat,
+  Flex,
+  Input,
+  Progress,
+  Stack,
+  Stat,
   StatLabel,
-  StatNumber, Text, Textarea,
+  StatNumber,
+  Text,
+  Textarea,
   useToast,
-  VStack
+  VStack,
 } from "@chakra-ui/react";
 import { doc, setDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
@@ -205,10 +210,22 @@ const CreateProfile: React.FC = () => {
               <Divider color="gray.100" />
             </Box>
             <Flex py={3} flexDirection="column" justifyContent="flex-start">
-              <Flex alignItems={"center"}>
+              <Flex alignItems={"center"} gap={{ base: "2", sm: "0", md: "0"}}>
                 <Avatar name={userName} size="xl" src={profileImage}></Avatar>
-                <div>
-                  <label className="image__upload" htmlFor="file">
+                <Flex
+                  flexDirection={{ base: "column", sm: "row", md: "row" }}
+                  gap={{ base: "2" }}
+                  alignItems="center"
+                >
+                  <label
+                    style={{
+                      width: "100px",
+                      textAlign: "center",
+                      fontSize: "12px",
+                    }}
+                    className="image__upload"
+                    htmlFor="file"
+                  >
                     イメージ選択
                   </label>
                   <input
@@ -218,7 +235,10 @@ const CreateProfile: React.FC = () => {
                     id="file"
                     style={{ display: "none" }}
                   />
-                </div>
+                  <Text fontSize={{ base: "xs", sm: "xs", md: "sm", lg: "sm" }}>
+                    推奨イメージサイズ : 400 x 400
+                  </Text>
+                </Flex>
               </Flex>
               <Box w="full" mt={1}>
                 {uploadingImage ? <Progress value={bytesCount} mt={2} /> : null}
@@ -231,298 +251,298 @@ const CreateProfile: React.FC = () => {
                   spacing={4}
                   overflowY="scroll"
                 >
-                    <Stack
-                      w="full"
-                      direction={"column"}
-                      mt={6}
-                      justifyContent="start"
-                    >
-                      <Text fontSize={"xs"} color="red.600" fontWeight={"bold"}>
-                        お名前*
-                      </Text>
-                      <Input
-                        name="name"
-                        required
-                        maxLength={50}
-                        placeholder="お名前"
-                        type="text"
-                        mb={2}
-                        mt={2}
-                        onChange={(e) => setUserName(e.target.value)}
-                        fontSize="10pt"
-                        _placeholder={{ color: "gray.500" }}
-                        _hover={{
-                          bg: "white",
-                          border: "1px solid",
-                          borderColor: "blue.500",
-                        }}
-                        _focus={{
-                          outline: "none",
-                          bg: "white",
-                          border: "1px solid",
-                          borderColor: "blue.500",
-                        }}
-                        bg="gray.50"
-                      />
-                    </Stack>
-                    <Stack
-                      w="full"
-                      direction={"column"}
-                      mt={6}
-                      justifyContent="start"
-                    >
-                      <Text fontSize={"xs"} color="red.600" fontWeight={"bold"}>
-                        メールアドレス*
-                      </Text>
-                      <Input
-                        name="email"
-                        required
-                        maxLength={50}
-                        placeholder="メールアドレス"
-                        type="email"
-                        mb={2}
-                        mt={2}
-                        value={currentUser.email}
-                        fontSize="10pt"
-                        _placeholder={{ color: "gray.500" }}
-                        _hover={{
-                          bg: "white",
-                          border: "1px solid",
-                          borderColor: "blue.500",
-                        }}
-                        _focus={{
-                          outline: "none",
-                          bg: "white",
-                          border: "1px solid",
-                          borderColor: "blue.500",
-                        }}
-                        bg="gray.50"
-                      />
-                    </Stack>
-                    <Stack
-                      w="full"
-                      mt={6}
-                      direction={"column"}
-                      justifyContent="start"
-                    >
-                      <Text fontSize={"xs"} color="red.600" fontWeight={"bold"}>
-                        所属（会社名・部署名等）*
-                      </Text>
-                      <Input
-                        name="companyName"
-                        required
-                        maxLength={50}
-                        onChange={(e) => setCompanyName(e.target.value)}
-                        placeholder="所属（会社名・部署名等）"
-                        type="text"
-                        mb={2}
-                        mt={2}
-                        value={companyName}
-                        fontSize="10pt"
-                        _placeholder={{ color: "gray.500" }}
-                        _hover={{
-                          bg: "white",
-                          border: "1px solid",
-                          borderColor: "blue.500",
-                        }}
-                        _focus={{
-                          outline: "none",
-                          bg: "white",
-                          border: "1px solid",
-                          borderColor: "blue.500",
-                        }}
-                        bg="gray.50"
-                      />
-                    </Stack>
-                    <Stack
-                      w="full"
-                      mt={6}
-                      direction={"column"}
-                      justifyContent="start"
-                    >
-                      <Text fontSize={"xs"} color="red.600" fontWeight={"bold"}>
-                        所属組織の紹介*
-                      </Text>
-                      <Input
-                        name="companyProfile"
-                        required
-                        maxLength={100}
-                        onChange={(e) => setCompanyProfile(e.target.value)}
-                        placeholder="所属組織の紹介"
-                        type="text"
-                        mb={2}
-                        mt={2}
-                        value={companyProfile}
-                        fontSize="10pt"
-                        _placeholder={{ color: "gray.500" }}
-                        _hover={{
-                          bg: "white",
-                          border: "1px solid",
-                          borderColor: "blue.500",
-                        }}
-                        _focus={{
-                          outline: "none",
-                          bg: "white",
-                          border: "1px solid",
-                          borderColor: "blue.500",
-                        }}
-                        bg="gray.50"
-                      />
-                    </Stack>
-                    <Stack
-                      w="full"
-                      mt={6}
-                      direction={"column"}
-                      justifyContent="start"
-                    >
-                      <Text fontSize={"xs"} color="red.600" fontWeight={"bold"}>
-                        職業プロフィール*
-                      </Text>
-                      <Input
-                        name="workProfile"
-                        required
-                        maxLength={50}
-                        onChange={(e) => setworkProfile(e.target.value)}
-                        placeholder="職業プロフィール"
-                        type="text"
-                        mb={2}
-                        mt={2}
-                        value={workProfile}
-                        fontSize="10pt"
-                        _placeholder={{ color: "gray.500" }}
-                        _hover={{
-                          bg: "white",
-                          border: "1px solid",
-                          borderColor: "blue.500",
-                        }}
-                        _focus={{
-                          outline: "none",
-                          bg: "white",
-                          border: "1px solid",
-                          borderColor: "blue.500",
-                        }}
-                        bg="gray.50"
-                      />
-                    </Stack>
-                    <Stack w="full" mt={6} justifyContent="start">
-                      <Text fontSize={"xs"} color="red.600" fontWeight={"bold"}>
-                        趣味*
-                      </Text>
-                      <Input
-                        name="hobbies"
-                        required
-                        maxLength={50}
-                        onChange={(e) => setHobbies(e.target.value)}
-                        placeholder="趣味"
-                        type="text"
-                        mb={2}
-                        mt={2}
-                        value={hobbies}
-                        fontSize="10pt"
-                        _placeholder={{ color: "gray.500" }}
-                        _hover={{
-                          bg: "white",
-                          border: "1px solid",
-                          borderColor: "blue.500",
-                        }}
-                        _focus={{
-                          outline: "none",
-                          bg: "white",
-                          border: "1px solid",
-                          borderColor: "blue.500",
-                        }}
-                        bg="gray.50"
-                      />
-                    </Stack>
-                    <Stack
-                      w="full"
-                      mt={6}
-                      direction={"column"}
-                      justifyContent="start"
-                      overflowY="scroll"
-                    >
-                      <Text fontSize={"xs"} color="red.600" fontWeight={"bold"}>
-                        ペット*
-                      </Text>
-                      <Input
-                        name="pet"
-                        required
-                        maxLength={50}
-                        onChange={(e) => setPet(e.target.value)}
-                        placeholder="飼っているペットまたは好きなものについて"
-                        type="text"
-                        mb={2}
-                        mt={2}
-                        value={pet}
-                        fontSize="10pt"
-                        _placeholder={{ color: "gray.500" }}
-                        _hover={{
-                          bg: "white",
-                          border: "1px solid",
-                          borderColor: "blue.500",
-                        }}
-                        _focus={{
-                          outline: "none",
-                          bg: "white",
-                          border: "1px solid",
-                          borderColor: "blue.500",
-                        }}
-                        bg="gray.50"
-                        textOverflow="clip"
-                      />
-                    </Stack>
-
-                    <Flex flexDirection="column" w="full" mt={6}>
-                      <Text fontSize={"xs"} color="red.600" fontWeight={"bold"}>
-                        自己紹介文*
-                      </Text>
-                      <Textarea
-                        resize={"vertical"}
-                        required
-                        maxLength={200}
-                        name="pr"
-                        onChange={(e) => setPr(e.target.value)}
-                        placeholder="自己紹介文"
-                        mb={2}
-                        mt={2}
-                        value={pr}
-                        fontSize="10pt"
-                        _placeholder={{ color: "gray.500" }}
-                        _hover={{
-                          bg: "white",
-                          border: "1px solid",
-                          borderColor: "blue.500",
-                        }}
-                        _focus={{
-                          outline: "none",
-                          bg: "white",
-                          border: "1px solid",
-                          borderColor: "blue.500",
-                        }}
-                        bg="gray.50"
-                      />
-                    </Flex>
-                    <Button
-                      isLoading={loading}
-                      loadingText={"作成中"}
+                  <Stack
+                    w="full"
+                    direction={"column"}
+                    mt={6}
+                    justifyContent="start"
+                  >
+                    <Text fontSize={"xs"} color="red.600" fontWeight={"bold"}>
+                      お名前*
+                    </Text>
+                    <Input
+                      name="name"
+                      required
+                      maxLength={50}
+                      placeholder="お名前"
+                      type="text"
+                      mb={2}
+                      mt={2}
+                      onChange={(e) => setUserName(e.target.value)}
+                      fontSize="10pt"
+                      _placeholder={{ color: "gray.500" }}
                       _hover={{
                         bg: "white",
                         border: "1px solid",
-                        borderColor: "red.500",
-                        color: "red.500",
+                        borderColor: "blue.500",
                       }}
+                      _focus={{
+                        outline: "none",
+                        bg: "white",
+                        border: "1px solid",
+                        borderColor: "blue.500",
+                      }}
+                      bg="gray.50"
+                    />
+                  </Stack>
+                  <Stack
+                    w="full"
+                    direction={"column"}
+                    mt={6}
+                    justifyContent="start"
+                  >
+                    <Text fontSize={"xs"} color="red.600" fontWeight={"bold"}>
+                      メールアドレス*
+                    </Text>
+                    <Input
+                      name="email"
+                      required
+                      maxLength={50}
+                      placeholder="メールアドレス"
+                      type="email"
+                      mb={2}
+                      mt={2}
+                      value={currentUser.email}
                       fontSize="10pt"
-                      fontWeight={700}
-                      onClick={handleCreateProfile}
-                      bg="red.500"
-                      color="white"
-                      variant="solid"
-                      height="36px"
-                      width="100%"
-                      className="my__button"
-                    >
-                      プロフィール作成
-                    </Button>
+                      _placeholder={{ color: "gray.500" }}
+                      _hover={{
+                        bg: "white",
+                        border: "1px solid",
+                        borderColor: "blue.500",
+                      }}
+                      _focus={{
+                        outline: "none",
+                        bg: "white",
+                        border: "1px solid",
+                        borderColor: "blue.500",
+                      }}
+                      bg="gray.50"
+                    />
+                  </Stack>
+                  <Stack
+                    w="full"
+                    mt={6}
+                    direction={"column"}
+                    justifyContent="start"
+                  >
+                    <Text fontSize={"xs"} color="red.600" fontWeight={"bold"}>
+                      所属（会社名・部署名等）*
+                    </Text>
+                    <Input
+                      name="companyName"
+                      required
+                      maxLength={50}
+                      onChange={(e) => setCompanyName(e.target.value)}
+                      placeholder="所属（会社名・部署名等）"
+                      type="text"
+                      mb={2}
+                      mt={2}
+                      value={companyName}
+                      fontSize="10pt"
+                      _placeholder={{ color: "gray.500" }}
+                      _hover={{
+                        bg: "white",
+                        border: "1px solid",
+                        borderColor: "blue.500",
+                      }}
+                      _focus={{
+                        outline: "none",
+                        bg: "white",
+                        border: "1px solid",
+                        borderColor: "blue.500",
+                      }}
+                      bg="gray.50"
+                    />
+                  </Stack>
+                  <Stack
+                    w="full"
+                    mt={6}
+                    direction={"column"}
+                    justifyContent="start"
+                  >
+                    <Text fontSize={"xs"} color="red.600" fontWeight={"bold"}>
+                      所属組織の紹介*
+                    </Text>
+                    <Input
+                      name="companyProfile"
+                      required
+                      maxLength={100}
+                      onChange={(e) => setCompanyProfile(e.target.value)}
+                      placeholder="所属組織の紹介"
+                      type="text"
+                      mb={2}
+                      mt={2}
+                      value={companyProfile}
+                      fontSize="10pt"
+                      _placeholder={{ color: "gray.500" }}
+                      _hover={{
+                        bg: "white",
+                        border: "1px solid",
+                        borderColor: "blue.500",
+                      }}
+                      _focus={{
+                        outline: "none",
+                        bg: "white",
+                        border: "1px solid",
+                        borderColor: "blue.500",
+                      }}
+                      bg="gray.50"
+                    />
+                  </Stack>
+                  <Stack
+                    w="full"
+                    mt={6}
+                    direction={"column"}
+                    justifyContent="start"
+                  >
+                    <Text fontSize={"xs"} color="red.600" fontWeight={"bold"}>
+                      職業プロフィール*
+                    </Text>
+                    <Input
+                      name="workProfile"
+                      required
+                      maxLength={50}
+                      onChange={(e) => setworkProfile(e.target.value)}
+                      placeholder="職業プロフィール"
+                      type="text"
+                      mb={2}
+                      mt={2}
+                      value={workProfile}
+                      fontSize="10pt"
+                      _placeholder={{ color: "gray.500" }}
+                      _hover={{
+                        bg: "white",
+                        border: "1px solid",
+                        borderColor: "blue.500",
+                      }}
+                      _focus={{
+                        outline: "none",
+                        bg: "white",
+                        border: "1px solid",
+                        borderColor: "blue.500",
+                      }}
+                      bg="gray.50"
+                    />
+                  </Stack>
+                  <Stack w="full" mt={6} justifyContent="start">
+                    <Text fontSize={"xs"} color="red.600" fontWeight={"bold"}>
+                      趣味*
+                    </Text>
+                    <Input
+                      name="hobbies"
+                      required
+                      maxLength={50}
+                      onChange={(e) => setHobbies(e.target.value)}
+                      placeholder="趣味"
+                      type="text"
+                      mb={2}
+                      mt={2}
+                      value={hobbies}
+                      fontSize="10pt"
+                      _placeholder={{ color: "gray.500" }}
+                      _hover={{
+                        bg: "white",
+                        border: "1px solid",
+                        borderColor: "blue.500",
+                      }}
+                      _focus={{
+                        outline: "none",
+                        bg: "white",
+                        border: "1px solid",
+                        borderColor: "blue.500",
+                      }}
+                      bg="gray.50"
+                    />
+                  </Stack>
+                  <Stack
+                    w="full"
+                    mt={6}
+                    direction={"column"}
+                    justifyContent="start"
+                    overflowY="scroll"
+                  >
+                    <Text fontSize={"xs"} color="red.600" fontWeight={"bold"}>
+                      ペット*
+                    </Text>
+                    <Input
+                      name="pet"
+                      required
+                      maxLength={50}
+                      onChange={(e) => setPet(e.target.value)}
+                      placeholder="飼っているペットまたは好きなものについて"
+                      type="text"
+                      mb={2}
+                      mt={2}
+                      value={pet}
+                      fontSize="10pt"
+                      _placeholder={{ color: "gray.500" }}
+                      _hover={{
+                        bg: "white",
+                        border: "1px solid",
+                        borderColor: "blue.500",
+                      }}
+                      _focus={{
+                        outline: "none",
+                        bg: "white",
+                        border: "1px solid",
+                        borderColor: "blue.500",
+                      }}
+                      bg="gray.50"
+                      textOverflow="clip"
+                    />
+                  </Stack>
+
+                  <Flex flexDirection="column" w="full" mt={6}>
+                    <Text fontSize={"xs"} color="red.600" fontWeight={"bold"}>
+                      自己紹介文*
+                    </Text>
+                    <Textarea
+                      resize={"vertical"}
+                      required
+                      maxLength={200}
+                      name="pr"
+                      onChange={(e) => setPr(e.target.value)}
+                      placeholder="自己紹介文"
+                      mb={2}
+                      mt={2}
+                      value={pr}
+                      fontSize="10pt"
+                      _placeholder={{ color: "gray.500" }}
+                      _hover={{
+                        bg: "white",
+                        border: "1px solid",
+                        borderColor: "blue.500",
+                      }}
+                      _focus={{
+                        outline: "none",
+                        bg: "white",
+                        border: "1px solid",
+                        borderColor: "blue.500",
+                      }}
+                      bg="gray.50"
+                    />
+                  </Flex>
+                  <Button
+                    isLoading={loading}
+                    loadingText={"作成中"}
+                    _hover={{
+                      bg: "white",
+                      border: "1px solid",
+                      borderColor: "red.500",
+                      color: "red.500",
+                    }}
+                    fontSize="10pt"
+                    fontWeight={700}
+                    onClick={handleCreateProfile}
+                    bg="red.500"
+                    color="white"
+                    variant="solid"
+                    height="36px"
+                    width="100%"
+                    className="my__button"
+                  >
+                    プロフィール作成
+                  </Button>
                 </Stack>
               </Box>
             </Flex>
