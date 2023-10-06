@@ -20,19 +20,26 @@ import RegisterSpace from "./components/CoWorkingSpaceRegistration/Register";
 import GenerateAccessKey from "./components/GenerateAccessKeyForVS/GenerateAccessKey";
 import ResetPassword from "./components/Model/Auth/ResetPassword";
 import LandingPage from "./components/LandingPage";
+import LandingPage1 from "./components/LandingPage1";
 import NewUserProfile from "./NewUserProfile";
 
 const App: React.FC = () => {
   return (
     <ChakraProvider theme={theme}>
       <Fonts />
+      <Routes>
+        <Route path="/landing-page" element={<LandingPage1 />} />
+      </Routes>
       <Layout>
         <Routes>
           <Route element={<ProtectedRoutes />}>
             <Route path="/home/:userId" element={<Home />} />
             <Route path="/chat" element={<Index />} />
             <Route path="/dashboard/:email" element={<Dashboard />} />
-            <Route path="/create-profile/:email/:accessKey" element={<CreateProfile />} />
+            <Route
+              path="/create-profile/:email/:accessKey"
+              element={<CreateProfile />}
+            />
             <Route path="/profile/:id" element={<ViewProfile />} />
             <Route path="/update-profile/:id" element={<UpdateProfile />} />
             <Route path="/new-user-profile/:id" element={<NewUserProfile />} />
@@ -43,7 +50,7 @@ const App: React.FC = () => {
           <Route path="/user-register" element={<Register />} />
           <Route path="/password-reset" element={<ResetPassword />} />
           <Route path="/" element={<HomePage />} />
-          <Route path="/landing-page" element={<LandingPage />} />
+          <Route path="/landing-page" element={""} />
           <Route path="/*" element={<PageNotFound />} />
           <Route path="/testing" element={<Testing />} />
         </Routes>
