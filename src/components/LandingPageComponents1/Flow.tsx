@@ -74,8 +74,7 @@ const PlanRight = styled.div`
   }
 `;
 
-const IconExtended = styled.div`
-  ${Icon}
+const IconExtended = styled(Icon)`
   font-size: var(--font-size-xl);
   padding: 50px;
   flex-direction: column;
@@ -123,8 +122,7 @@ const NotificationExt = styled(Notification)`
   }
 `;
 
-const Card = styled.div`
-  ${CardCommon}
+const Card = styled(CardCommon)`
   max-width: unset;
   @media (max-width: 768px) {
     background-color: var(--cl-grey);
@@ -226,12 +224,10 @@ const Flow: React.FC = () => {
   return (
     <>
       <Section>
-        <Reveal>
-          <IconExtended>
-            <IconText>バーチャル空間で 会話を増やしませんか？？</IconText>
-            <Button>SWTに登録する</Button>
-          </IconExtended>
-        </Reveal>
+        <IconExtended>
+          <IconText>バーチャル空間で 会話を増やしませんか？？</IconText>
+          <Button>SWTに登録する</Button>
+        </IconExtended>
         <Reveal>
           <Notification>企業ごとのメリットをご紹介</Notification>
         </Reveal>

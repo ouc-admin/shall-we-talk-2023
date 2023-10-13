@@ -42,6 +42,7 @@ const Links = styled.div`
     flex-direction: column;
     height: 100%;
     padding: 25px;
+    gap: 25px;
     justify-content: flex-start;
   }
 `;
@@ -91,6 +92,9 @@ const ListExtended = styled(List)`
   @media (max-width: 1360px) {
     max-width: 50%;
   }
+  @media (max-width: 425px) {
+    max-width: unset;
+  }
 `;
 const LinkTags = styled.a``;
 
@@ -104,6 +108,9 @@ const Icon = styled.a`
   align-items: center;
   justify-content: center;
   padding: 1.65em;
+  @media (max-width: 425px) {
+    padding: 1em;
+  }
 `;
 
 const Navbar: React.FC = () => {
