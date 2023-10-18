@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useMediaQuery } from "@chakra-ui/react";
+import Reveal from "./RevealAnimate";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   width: 100%;
@@ -16,7 +19,7 @@ const Container = styled.div`
   }
 `;
 
-const LinksContainer = styled.div`
+const LinksContainer = styled(motion.div)`
   display: flex;
   margin-left: auto;
   flex: 1 1 60%;
@@ -98,7 +101,7 @@ const ListExtended = styled(List)`
 `;
 const LinkTags = styled.a``;
 
-const Icon = styled.a`
+const Icon = styled.div`
   color: white;
   font-weight: 600;
   font-size: var(--font-size-m);
@@ -112,7 +115,27 @@ const Icon = styled.a`
     padding: 1em;
   }
 `;
-
+const LinkWrapper = () => {
+  const handleLogin = () => {};
+  const handleRegister = () => {};
+  return (
+    <Links>
+      <List>
+        <LinkTags href="#about">SWTについて</LinkTags>
+        <LinkTags href="#flow">導入フロー</LinkTags>
+        <LinkTags href="#plan">Plan</LinkTags>
+      </List>
+      <ListExtended>
+        <Icon onClick={handleLogin}>
+          <span>ログイン</span>
+        </Icon>
+        <Icon onClick={handleRegister}>
+          <span>登録</span>
+        </Icon>
+      </ListExtended>
+    </Links>
+  );
+};
 const Navbar: React.FC = () => {
   const [isLessThan768] = useMediaQuery("(min-width: 768px)");
   const [isOpen, setIsOpen] = useState(false);
@@ -127,27 +150,24 @@ const Navbar: React.FC = () => {
         <Logo src="./img/parrot.png" />
         <LogoImg src="./img/ld/swt.png" />
       </a>
-      {isLessThan768 || isOpen ? (
+      {isLessThan768 ? (
         <LinksContainer>
-          {isOpen && <Background onClick={handleClose}></Background>}
-          <Links>
-            <List>
-              <LinkTags href="#about">SWTについて</LinkTags>
-              <LinkTags href="#flow">導入フロー</LinkTags>
-              <LinkTags href="#plan">Plan</LinkTags>
-            </List>
-            <ListExtended>
-              <Icon href="#login">
-                <span>ログイン</span>
-              </Icon>
-              <Icon href="#regiter">
-                <span>登録</span>
-              </Icon>
-            </ListExtended>
-          </Links>
+          <LinkWrapper />
         </LinksContainer>
       ) : (
-        <div onClick={() => setIsOpen(true)}>Button</div>
+        <>
+          {isOpen && (
+            <Reveal
+              variant={{ x: 200 }}
+              variantEnd={{ x: 0 }}
+              htmlcomponent={LinksContainer}
+            >
+              <Background onClick={handleClose}></Background>
+              <LinkWrapper />
+            </Reveal>
+          )}
+          <div onClick={() => setIsOpen(true)}>ログイン&登録</div>
+        </>
       )}
     </Container>
   );
