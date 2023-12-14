@@ -1,0 +1,69 @@
+@import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
+
+.landing-page-main {
+  --cl-grey: #e5e5e5;
+  --cl-red: #eb093c;
+  --cl-black: #000000;
+  --cl-white: #ebe6e6;
+  --cl-white1: #e1e0e0;
+  --font-size-xxxl: 102px;
+  --font-size-xxl: 60px;
+  --font-size-xl: 55px;
+  --font-size-l: 50px;
+  --font-size-xxxm: 45px;
+  --font-size-xxm: 40px;
+  --font-size-xm: 35px;
+  --font-size-m: 30px;
+  --font-size-s: 25px;
+  --font-size-xs: 20px;
+  --ff-primary: "yu-gothic", sans-serif;
+  --ff-sec: "Anton", sans-serif;
+  @media screen and (max-width: 1700px) {
+    --font-size-xxxl: 65px;
+    --font-size-xxl: 50px;
+    --font-size-xl: 45px;
+    --font-size-l: 40px;
+    --font-size-xxxm: 35px;
+    --font-size-xxm: 30px;
+    --font-size-xm: 30px;
+    --font-size-m: 25px;
+    --font-size-s: 20px;
+    --font-size-xs: 20px;
+  }
+  @media screen and (max-width: 1360px) {
+    --font-size-xxxl: 60px;
+    --font-size-xxl: 45px;
+    --font-size-xl: 40px;
+    --font-size-l: 35px;
+    --font-size-xxxm: 35px;
+    --font-size-xxm: 30px;
+    --font-size-xm: 25px;
+    --font-size-m: 22px;
+    --font-size-s: 20px;
+    --font-size-xs: 20px;
+  }
+  @media screen and (max-width: 768px) {
+    --font-size-xxxl: 60px;
+    --font-size-xxl: 40px;
+    --font-size-xl: 30px;
+    --font-size-l: 26px;
+    --font-size-xxxm: 22px;
+    --font-size-xxm: 20px;
+    --font-size-xm: 20px;
+    --font-size-m: 16px;
+    --font-size-s: 16px;
+    --font-size-xs: 14px;
+  }
+  @media screen and (max-width: 768px) {
+    --font-size-xxxl: 50px;
+    --font-size-xxl: 30px;
+    --font-size-xl: 24px;
+    --font-size-l: 22px;
+    --font-size-xxxm: 20px;
+    --font-size-xxm: 18px;
+    --font-size-xm: 17px;
+    --font-size-m: 16px;
+    --font-size-s: 14px;
+    --font-size-xs: 12px;
+  }
+}
